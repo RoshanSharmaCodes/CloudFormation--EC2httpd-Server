@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Cross Stack Demo"
+
+Metadata: 
+  Stack1:
+    Description: "This Stack is used to import values from another stack" 
+
+Resources: 
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: "t2.micro"
+      ImageId: ami-0af2f764c580cc1f9
+      AvailabilityZone:
+        Fn::ImportValue: !Sub AZName
+
+
+Outputs:
+  EC2InstanceOP:
+    Value: !GetAtt EC2Instance.AvailabilityZone
+    Description: "Availability Zone of EC2 instance"
